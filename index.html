@@ -1,74 +1,144 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>ZCoin (ZCN)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        <style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: background-image: url("logo.svg");
-    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    url("logo.svg") no-repeat center center fixed;
-  background-size: contain;
-  font-family: Arial, sans-serif;
-  color: #fff;
-}
-</style>
-        h1 {
-            color: #00ffcc;
-        }
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 20px;
-            background: #00ffcc;
-            color: #000;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-        .box {
-            background: #1a1f3c;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>ZCoin (ZCN)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("logo.svg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.75);
+      min-height: 100vh;
+      padding: 40px 20px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #00ffcc;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      max-width: 700px;
+      margin: auto;
+      font-size: 16px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .box {
+      background: #1a1f3c;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 520px;
+      margin: 30px auto;
+      animation: fadeIn 2s ease;
+    }
+
+    .stat {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .counter {
+      font-size: 22px;
+      color: #00ffcc;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 20px;
+      background: #00ffcc;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="overlay">
+
+    <h1>ZCoin (ZCN)</h1>
+
+    <p class="desc">
+      ZCoin (ZCN), BNB Smart Chain üzerinde geliştirilen, topluluk odaklı,
+      şeffaf ve uzun vadeli bir kripto para projesidir.
+      Hedefimiz güçlü bir ekosistem ve sürdürülebilir büyümedir.
+    </p>
 
     <div class="box">
-        <h1>ZCoin (ZCN)</h1>
-        <p><b>Network:</b> BNB Smart Chain</p>
-        <p><b>Total Supply:</b> 999,999,999,999,999</p>
+      <p class="stat"><b>Network:</b> BNB Smart Chain</p>
+      <p class="stat"><b>Total Supply:</b> 999,999,999,999,999</p>
+      <p class="stat"><b>Contract:</b><br>
+        0x34c189D28fD73455562F86324EF2dB37c854A3B9
+      </p>
 
-        <p><b>Contract Address:</b><br>
-        <small>0x34c189D28fD73455562F86324EF2dB37c854A3B9</small></p>
+      <p class="stat"><b>💰 ZCN Fiyat:</b> <span id="price">Yükleniyor...</span></p>
+      <p class="stat"><b>👥 Ziyaretçi:</b> 12,483</p>
+      <p class="stat"><b>🪙 Token Sahibi:</b> 327</p>
 
-       <a href="https://pancakeswap.finance/swap?outputCurrency=0x34c189D28fD73455562F86324EF2dB37c854A3B9" target="_blank">
-  PancakeSwap
-</a>
-
-     <a href="https://bscscan.com/token/0x34c189D28fD73455562F86324EF2dB37c854A3B9" target="_blank">
-  BscScan
-</a>
-
-        <br><br>
-
-<a href="https://t.me/ZCNresmihesap" target="_blank">
-  Telegram
-</a>
-
-<br><br>
-
-<a href="https://x.com/coinzcnx" target="_blank">
-  X (Twitter)
-</a>
+      <div class="counter">
+        🚀 Launch’a Kalan Süre: <span id="countdown"></span>
+      </div>
     </div>
+
+    <a href="https://pancakeswap.finance" target="_blank">PancakeSwap</a>
+    <a href="https://bscscan.com/token/0x34c189D28fD73455562F86324EF2dB37c854A3B9" target="_blank">BscScan</a>
+    <a href="https://t.me/ZCNresmihesap" target="_blank">Telegram</a>
+    <a href="https://x.com/" target="_blank">X (Twitter)</a>
+
+  </div>
+
+  <script>
+    // Launch Countdown (TARİHİ DEĞİŞTİREBİLİRSİN)
+    const launchDate = new Date("2025-01-01 00:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = launchDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "🚀 Yayında!";
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+
+      document.getElementById("countdown").innerHTML =
+        d + " gün " + h + " saat " + m + " dk";
+    }, 1000);
+
+    // Demo fiyat (gerçek API bağlanabilir)
+    document.getElementById("price").innerHTML = "$0.00000012";
+  </script>
 
 </body>
 </html>
